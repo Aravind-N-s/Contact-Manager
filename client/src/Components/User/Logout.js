@@ -9,14 +9,14 @@ import {resetUser} from '../../Redux/Actions/User'
 class Logout extends React.Component{
     
     componentDidMount(){
-        axios.delete(`/user/logout`,{
+        axios.delete(`/users/logout`,{
         headers:{
             'x-auth':localStorage.getItem('userAuthToken')
         }
         })
         .then(response=>{
             localStorage.removeItem('userAuthToken')
-            this.props.dispath(resetUser())
+            this.props.dispatch(resetUser())
         })
     }
     render(){

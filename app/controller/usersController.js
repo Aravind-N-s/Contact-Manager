@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const _ = require('lodash')
 const { User } = require('../model/User')
 const {authenticateUser} = require('../middlewares/authentication')
 
-//localhost:3000/users/register
+//localhost:3005/users/register
 router.post('/register', (req,res) => {
     const body = req.body
     const user = new User(body)
@@ -16,7 +17,7 @@ router.post('/register', (req,res) => {
         })
 
 })
-//localhost:3000/users/login
+//localhost:3005/users/login
 router.post('/login', (req,res) =>{
     const body = req.body  
     
@@ -25,18 +26,20 @@ router.post('/login', (req,res) =>{
             return user.generateToken()
         })
         .then(token =>{
-            res.setHeader('x-auth',token).send({})
+            // res.setHeader('x-auth',token).send({})
+            res.send({token})
         })
         .catch(err => {
             res.send(err)
         })
 })
-//localhost:3000/users/account
+//localhost:3005/users/account
 router.get('/account',authenticateUser, (req,res)=>{
     const {user} = req
-    res.send(user)
+    // res.send(user)
+    res.send(_.pick(user, ['_id','username','email','createdAt']))
 })
-//localhost:3000/users/logout
+//localhost:3005/users/logout
 router.delete('/logout',authenticateUser, (req,res) =>{
     const { user, token } = req
     User.findByIdAndUpdate(user._id,{$pull: {tokens: { token: token }}})

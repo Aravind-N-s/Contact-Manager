@@ -24,7 +24,7 @@ class Login extends React.Component{
             password:this.state.password
         }
         console.log(formData)
-        axios.post(`/user/login`,formData)
+        axios.post(`/users/login`,formData)
         .then(response=>{
             console.log(response)
             if(response.data.errors){
@@ -33,6 +33,7 @@ class Login extends React.Component{
                 const token=response.data.token
                 if(token){
                     localStorage.setItem('userAuthToken',token)
+                    this.props.history.push('/account')
                 }
             }
         })
