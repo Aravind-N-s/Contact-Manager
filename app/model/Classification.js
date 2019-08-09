@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const contactClassification = new Schema({
-    classification:{
+const classificationSchema = new Schema({
+    name:{
         type: String,
         required: true
     },
@@ -12,4 +12,6 @@ const contactClassification = new Schema({
     }
 })
 
-const Classification = mongoose.model('Classification',contactClassification)
+const Classification = mongoose.model('Classification',classificationSchema)
+
+module.exports = Classification

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {setUser} from '../../Redux/Actions/User'
+import {setContact} from '../../Redux/Actions/Contact'
 
 class Account extends React.Component{
     // tokens are sending to server
@@ -16,9 +17,19 @@ class Account extends React.Component{
         }) 
         .then (response=>{
             const user=response.data
-            console.log(user)
-            this.setState({user})
             this.props.dispatch(setUser(user))
+            //when our current value doesn't depend on previous value, that time 
+            //else use () =>{}
+        })     
+          
+        axios.get(`/contact`,{
+            headers:{
+                'x-auth':localStorage.getItem('userAuthToken')
+            }
+        }) 
+        .then (response=>{
+            const contact=response.data
+            this.props.dispatch(setContact(contact))
             //when our current value doesn't depend on previous value, that time 
             //else use () =>{}
         })        
@@ -26,12 +37,12 @@ class Account extends React.Component{
 
     render(){
         return(
-            <div className = "bg-white" >
-                <h6 className="text-weight-bold">User Account</h6>
-                    <h4 className="container bg-white text-dark text-weight-bold text-capitalize">{this.props.user.username}
+            <div>
+                <h6>User Account</h6>
+                    <h4>{this.props.user.username}
                     </h4>
                     
-               <Link className="btn btn-success" to="logout">Logout</Link> 
+               <Link to="logout">Logout</Link> 
             </div>
         )
     }
@@ -39,7 +50,7 @@ class Account extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        user:  state.user
+        user : state.user
     }
 }
 

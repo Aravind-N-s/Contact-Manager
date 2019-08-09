@@ -17,9 +17,27 @@ if(localStorage.getItem('userAuthToken')){
         }
     })
     .then(response => {
-        console.log(response.data,'index')
+        console.log(response.data)
         store.dispatch(setUser(response.data))
     })
+    axios.get('/contact',{
+        headers: {
+            'x-auth': localStorage.getItem('userAuthToken')
+        }
+    })
+    .then(response => {
+        console.log(response.data)
+        // store.dispatch(setContact(response.data))
+    })
+    // axios.get('/classification',{
+    //     headers: {
+    //         'x-auth': localStorage.getItem('userAuthToken')
+    //     }
+    // })
+    // .then(response => {
+    //     console.log(response.data)
+    //     store.dispatch(setClassification(response.data))
+    // })
 }
 const jsx = (
     <Provider store={store}>
