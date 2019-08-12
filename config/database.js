@@ -4,7 +4,8 @@ mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 
 //connect to db
-mongoose.connect('mongodb://localhost:27017/contactManger', { useNewUrlParser: true })
+const CONNECTION_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/notes-app-feb'
+mongoose.connect(CONNECTION_URI, { useNewUrlParser: true })
     .then(() => {
         console.log('Connected to the DB')
     })

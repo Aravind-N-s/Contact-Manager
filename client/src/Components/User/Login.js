@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from '../../Config/axios'
+import {Redirect} from 'react-router-dom'
 
 class Login extends React.Component{
     constructor(props){
@@ -26,19 +27,19 @@ class Login extends React.Component{
         console.log(formData)
         axios.post(`/users/login`,formData)
         .then(response=>{
-            console.log(response)
             if(response.data.errors){
                 alert(response.data.errors)
             }else{
                 const token=response.data.token
+                console.log(response.data)
                 if(token){
                     localStorage.setItem('userAuthToken',token)
-                    this.props.history.push('/account')
+                    // this.props.history.push('/')
                 }
             }
         })
         .catch(err =>{
-            alert('err')
+            alert(err)
         })
 
     }
@@ -52,7 +53,7 @@ class Login extends React.Component{
                 <label>                               
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
                 </label><br />
-                <input type="submit"/><br />
+                <input type="submit" /><Redirect to='/login'  /><br />
             </form>
         )
     }

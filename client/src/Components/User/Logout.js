@@ -17,6 +17,7 @@ class Logout extends React.Component{
         .then(response=>{
             localStorage.removeItem('userAuthToken')
             this.props.dispatch(resetUser())
+            this.props.history.push('/')
         })
     }
     render(){

@@ -4,5 +4,5 @@ export const setContact = (contact) => {
 }
 
 export const resetContact = () => {
-    return { type: 'RESET_USER'}
+    return { type: 'RESET_CONTACT'}
 }

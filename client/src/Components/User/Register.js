@@ -29,7 +29,7 @@ class Register extends React.Component{
         .then(response=>{
             if(response.data.errors){
                 alert(response.data.message)
-                this.props.history.push('/users/login')
+                // this.props.history.push('/users/login')
             }
         })
         .catch(err=> {

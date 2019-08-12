@@ -24,10 +24,10 @@ class CategoryForm extends React.Component{
     }
     render(){
         return(
-            <div className = "container input-group input-group-lg border border-secondary">
+            <div>
                 <form onSubmit = {this.handleSubmit}>
                     <label>
-                        <span className="input-group-text">Category Name</span>
+                        <span>Classification Name</span>
                         <input type="text" name='name' onChange={this.handleChange}/>
                     </label><br />
                     <input className ="btn btn-dark"  type = "submit" />

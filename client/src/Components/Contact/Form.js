@@ -4,13 +4,6 @@ import axios from '../../Config/axios'
 class ContactForm extends React.Component{
     constructor(props){
         super(props)
-        this.state = {
-            name: '',
-            phoneNo: '',
-            email:'',
-            category: '',
-            categories: []            
-        }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -41,20 +34,7 @@ class ContactForm extends React.Component{
             category: this.state.category
         }))
     }
-
-    componentDidMount() {
-        axios.get('/categories',{
-            headers:{
-                'x-auth':localStorage.getItem('userAuthToken')
-                }
-            })
-            .then((response) => {
-                this.setState(() => ({
-                    categories: response.data
-                }))
-            })
-    }
-
+    
     render() {
         return (
             <div>

@@ -1,20 +1,31 @@
 import React from 'react'
 import CategoryForm from './Form'
-import axios from '../../config/axios';
+import axios from '../../Config/axios'
+import {connect} from 'react-redux'
+import {addClassification} from '../../Redux/Actions/Classification'
 
-class CategoryNew extends React.Component{
+class ClassificationNew extends React.Component{
     constructor(props){
         super(props)
+        this.state= {
+            name : ''
+        }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     handleSubmit(formData){
-        axios.post('/categories',formData)
+        axios.post('/classification',formData, { 
+            headers: {
+                'x-auth': localStorage.getItem('userAuthToken')
+            }
+        })
         .then(response => {
             if(response.data.hasOwnProperty('errors')){
                 console.log(response.data.errors)
             }
             else {
-                this.props.history.push(`/category`)
+                // this.props.history.push(`/`)
+                const newClassification = response.data
+                this.props.dispatch(addClassification(newClassification))
             }
         })
         .catch((err) => {
@@ -30,4 +41,4 @@ class CategoryNew extends React.Component{
     }
 }
 
-export default CategoryNew
+export default connect()(ClassificationNew)

@@ -1,7 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
+import {Navbar, Container} from 'react-bootstrap' 
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom'
 
 import Login from './Components/User/Login'
@@ -9,18 +10,14 @@ import Logout from './Components/User/Logout'
 import Account from './Components/User/Account'
 import Register from './Components/User/Register'
 
-import ContactNew from  './Components/Contact/New'
-import ContactEdit from './Components/Contact/Edit'
-import ContactList from './Components/Contact/List'
-import ContactShow from './Components/Contact/Show'
+import ContactList from "./Components/Contact/List"
+
+import ClassificationList from './Components/Classification/List'
 
 class App extends React.Component {
 
     constructor(props){
         super(props)
-        this.state={
-            isAuthenticated: false
-        }
         this.handleAuth=this.handleAuth.bind(this)
     }
 
@@ -28,12 +25,20 @@ class App extends React.Component {
         return(
             <div>
                 {_.isEmpty(this.props.user) ? (
-                    <div> 
-                        <Link to="/register">Register</Link><br />
-                        <Link to="/login">Login</Link><br />
-                    </div>
+                    <>
+                        <Popup trigger={<Link to="/users/login">Login</Link>} position="right top"on="hover">
+                            <Login />
+                        </Popup><br />
+                        <Popup trigger={<Link to="/users/register">Register</Link>} position="right top"on="hover">
+                            <Register />
+                        </Popup>
+                    </>
                 ) : (
-                    <Link to="/account">Account</Link>
+                    <>
+                        <Popup trigger={<Link to="/users/account">Account</Link>}position="top left"on="hover">
+                           <Account />                          
+                        </Popup>
+                    </>
                 ) }
             </div>
         )
@@ -42,43 +47,47 @@ class App extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <span><Link to="/" >Contact Manager</Link>{this.handleAuth()}</span>
+                {!_.isEmpty(this.props.user)?(
+                    <Navbar bg="dark" fixed="bottom">
+                        <Navbar.Brand ><Link to="/" >
+                            <h1>{this.props.user.username+"'s"} Contacts</h1>
+                            </Link>{this.handleAuth()}
+                        </Navbar.Brand>
+                    </Navbar>
+                ):(
+                    <>
+                        <h1>Contact Manager</h1> <span styles={{float: 'right'}}>{this.handleAuth()}</span>
+                    </>
+                )}                        
+                
                 <>
-                    <Switch>
-                        {_.isEmpty(this.props.user) ? (
-                            <div> 
-                                <Route path="/register" component={Register}/>        
-                                <Route path="/login" component={Login}/> 
-                                <Route render={() => {
-                                    return <h2>path not exist</h2>
-                                }} exact={true}/>   
-                            </div>
-                        ) : (
-                            <div>
-                                <div>
-                                    <Popup trigger={<Link to ="/notes"><h3> New Notes</h3></Link>} position = "right top" on="click">
-                                        <div>
-                                            <ContactNew />
-                                        </div>
-                                    </Popup>
-                                    <Link to ="/category"><h3>List Category</h3></Link>
-                                    {/* <ContactList/>                                     */}
+                    {_.isEmpty(this.props.user) ? (
+                            <Switch>
+                                <>
+                                    <Route path="users/register" exact={true} strict={true} />        
+                                    <Route path="users/login" exact={true} strict={true}/> 
+                                    <Route render={() => {
+                                        return <h2>path not exist</h2>
+                                    }} exact={true}/>
+                                </>   
+                            </Switch>
+                    ) : (      
+                        <> 
+                            <Container>
+                                <div className="row">
+                                    <ClassificationList />
+                                    <ContactList />
                                 </div>
-                                <Switch>
-                                    <>
-                                        <Route path="/account" component={Account}/>                     
-                                        <Route path="/logout" component={Logout}/>   
-                                        <Route path="/contacts" exact={true}/>
-                                        <Route path="/contacts/add" component={ContactNew} exact={true}/>
-                                        <Route path="/contacts/edit/:id" component={ContactEdit} exact={true} />
-                                        <Route path="/contacts/:id" component={ContactShow} exact={true}/>
-                                        {/* <Route path="/category" component={CategoryList} exact={true}/>
-                                        <Route path="/category/new" component={CategoryNew} />   */}
-                                    </>
-                                </Switch>
-                            </div> 
-                        ) }                                                 
-                    </Switch>
+                            </Container>    
+                            <Switch>
+                            <>
+                                <Route path="/users/account" exact strict component={Account}/>                     
+                                <Route path="/users/logout" exact strict component={Logout}/>   
+                                <Route path="/contact/new" exact strict />   
+                                <Route path="/contact/info" exact strict/>   
+                            </>
+                            </Switch>
+                        </> )}
                 </>  
             </BrowserRouter>
         )
@@ -87,7 +96,9 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-      user: state.user
+      user: state.user,
+      contact : state.contact,
+      classification: state.classification
     }
   }
 export default connect(mapStateToProps)(App)

@@ -1,37 +1,28 @@
 import React from 'react'
-import axios from '../../config/axios'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import CategoryEdit from "./Edit";
+import ClassificationNew from './New'
 
-class CategoryList extends React.Component{
-    constructor(){
-        super()
-        this.state = {
-            category: []
-        }
-    }
-
-    componentDidMount(){
-        axios.get('/categories')
-            .then(response => {
-                this.setState(() => ({
-                    category: response.data
-                }))
-            })
-    }
-    render(){
-        return(
-            <div className = "container">   
-                <ul style={{textTransform: "capitalize"}} className = "list-group">
-                    {this.state.category.map(categories => {
-                        return <li className = "list-group-item col-sm-4" key={categories._id}>{categories.name} <CategoryEdit/></li>
-                    })}
-                </ul><br />
-                <Link className = "btn btn-secondary" to={'/category/new'}>New Categories</Link>
-            </div>
-        )
-    }
+const ClassificationList = (props) => {
+    return (
+        <div className = "col-sm-4">
+            <h3>Classification List</h3> 
+            {props.classification && (
+                <ol>
+                    {props.classification.map((classifications => {
+                        return <li key={classifications._id}><Link to="/contact/new">{classifications.name}</Link></li> 
+                    }))}
+                </ol>
+            )}
+            <ClassificationNew />
+        </div>
+    )
 }
 
-export default CategoryList
+const mapStateToProps = (state) => {
+    return {
+        classification : state.classification
+    }
+}
+export default connect(mapStateToProps)(ClassificationList)

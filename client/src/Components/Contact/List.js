@@ -1,26 +1,31 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import Popup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-import { connect } from 'react-redux'
+import ContactDisplay from './Show'
 
-class ContactList extends React.Component {
-    
-    render(){
-        return (
-            <div>
-                <h2> Contact </h2>
-                <ul>
-                    {this.state.contact.map(note => {
-                        return <li key={this.props.contact._id}><Link to={`/contact/${this.props.contact._id}`}>{this.props.contact.name}</Link></li>
-                    })}
-                </ul>
-            </div>
-        )
-    }
+const ContactList = (props) =>{
+    return (
+        <div>
+            <h3>Contacts List</h3>
+            {props.contact && (
+                props.contact.map((contacts => {
+                    return (
+                        <div key ={contacts._id}>
+                            <Popup  trigger={<Link to='/contact/info'>{contacts.name}<br/></Link>} position = "right bottom" on="hover"> 
+                                <ContactDisplay id={contacts._id}/>
+                            </Popup>
+                        </div>
+                    )
+                }))
+            )}
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
-    return {
-        contact : state.contact
+    return{
+        contact: state.contact
     }
 }
 
