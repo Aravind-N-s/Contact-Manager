@@ -2,7 +2,7 @@ const express = require ('express')
 const router = express.Router()
 const contactController = require('../app/Controllers/contactController')
 const classficationController = require('../app/Controllers/classificationController')
-const {authenticateUser} = require('../app/Middlewares/authentication')
+const {authenticateUser} = require('../app/Middleware/authentication')
 
 router.get('/contact',authenticateUser, contactController.list)
 router.get('/contact/:id',authenticateUser, contactController.show)
