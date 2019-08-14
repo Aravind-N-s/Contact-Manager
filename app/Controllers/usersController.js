@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const _ = require('lodash')
-const { User } = require('../Model/User')
+const { User } = require('../Models/User')
 const {authenticateUser} = require('../Middlewares/authentication')
 
 //localhost:3005/users/register

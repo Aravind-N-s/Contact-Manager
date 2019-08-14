@@ -1,4 +1,4 @@
-const Classification = require('../Model/Classification')
+const Classification = require('../Models/Classification')
 
 module.exports.list = (req,res) =>{
     const {user} = req
