@@ -2,7 +2,6 @@ import React from 'react'
 import axios from '../../Config/axios'
 
 import {connect} from 'react-redux'
-
 import {resetUser} from '../../Redux/Actions/User'
 
 

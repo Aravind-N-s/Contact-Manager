@@ -3,7 +3,7 @@ import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import {connect} from 'react-redux'
 import {Navbar, Container} from 'react-bootstrap' 
-import {BrowserRouter, Route, Link, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom'
 
 import Login from './Components/User/Login'
 import Logout from './Components/User/Logout'
@@ -15,7 +15,6 @@ import ContactList from "./Components/Contact/List"
 import ClassificationList from './Components/Classification/List'
 
 class App extends React.Component {
-
     constructor(props){
         super(props)
         this.handleAuth=this.handleAuth.bind(this)
@@ -26,16 +25,16 @@ class App extends React.Component {
             <div>
                 {_.isEmpty(this.props.user) ? (
                     <>
-                        <Popup trigger={<Link to="/users/login">Login</Link>} position="right top"on="hover">
+                        <Popup trigger={<Link className="btn btn-success" to="/users/login">Login</Link>} position="left top"on="click">
                             <Login />
                         </Popup><br />
-                        <Popup trigger={<Link to="/users/register">Register</Link>} position="right top"on="hover">
+                        <Popup trigger={<Link style={{marginTop:5}} className="btn btn-success" to="/users/register">Register</Link>} position="left top"on="click">
                             <Register />
                         </Popup>
                     </>
                 ) : (
                     <>
-                        <Popup trigger={<Link to="/users/account">Account</Link>}position="top left"on="hover">
+                        <Popup trigger={<Link style={{position: "absolute", top: "25%", right: 10}} className="btn btn-danger" to="/users/account">Account</Link>}position="top right"on="click">
                            <Account />                          
                         </Popup>
                     </>
@@ -48,15 +47,15 @@ class App extends React.Component {
         return (
             <BrowserRouter>
                 {!_.isEmpty(this.props.user)?(
-                    <Navbar bg="dark" fixed="bottom">
-                        <Navbar.Brand ><Link to="/" >
+                    <Navbar className="font-italic font-weight-bold shadow-lg rounded bg-dark" fixed="bottom">
+                        <Navbar.Brand><Link to="/" >
                             <h1>{this.props.user.username+"'s"} Contacts</h1>
                             </Link>{this.handleAuth()}
                         </Navbar.Brand>
                     </Navbar>
                 ):(
                     <>
-                        <h1>Contact Manager</h1> <span styles={{float: 'right'}}>{this.handleAuth()}</span>
+                        <div className="navbar font-italic font-weight-bold shadow-lg p-3 mb-5 rounded bg-danger"><h1>Contact Manager</h1> {this.handleAuth()} </div>
                     </>
                 )}                        
                 
@@ -64,25 +63,23 @@ class App extends React.Component {
                     {_.isEmpty(this.props.user) ? (
                             <Switch>
                                 <>
-                                    <Route path="users/register" exact={true} strict={true} />        
-                                    <Route path="users/login" exact={true} strict={true}/> 
-                                    <Route render={() => {
-                                        return <h2>path not exist</h2>
-                                    }} exact={true}/>
+                                    <Route exact strict path="users/register"/>        
+                                    <Route exact strict path="users/login"/> 
+                                    <img style={{marginLeft: "35%"}}src="/images/2.jpg"/>
                                 </>   
                             </Switch>
                     ) : (      
                         <> 
-                            <Container>
-                                <div className="row">
-                                    <ClassificationList />
-                                    <ContactList />
+                            {/* <Container>
+                                <div className="row border">
+                                    <ClassificationList/>
+                                    <ContactList/>
                                 </div>
-                            </Container>    
+                            </Container>     */}
                             <Switch>
                             <>
-                                <Route path="/users/account" exact strict component={Account}/>                     
-                                <Route path="/users/logout" exact strict component={Logout}/>   
+                                <Route exact strict path="/users/account"/>                     
+                                <Route exact strict path="/users/logout" component={Logout}/>   
                                 <Route path="/contact/new" exact strict />   
                                 <Route path="/contact/info" exact strict/>   
                             </>

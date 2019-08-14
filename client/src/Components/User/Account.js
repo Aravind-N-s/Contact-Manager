@@ -3,7 +3,6 @@ import axios from '../../Config/axios'
 import {Link} from 'react-router-dom'
 
 import {connect} from 'react-redux'
-
 import {setUser} from '../../Redux/Actions/User'
 
 class Account extends React.Component{
@@ -33,7 +32,7 @@ class Account extends React.Component{
                     {this.props.contact.map((contacts) => {
                         return <div key={contacts._id}>{contacts.name}</div>
                     })}
-               <Link to="logout">Logout</Link> 
+               <Link to="/users/logout">Logout</Link> 
             </div>
         )
     }

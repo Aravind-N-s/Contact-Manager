@@ -30,6 +30,8 @@ class Register extends React.Component{
             if(response.data.errors){
                 alert(response.data.message)
                 // this.props.history.push('/users/login')
+            }else {
+                alert("Please Go To Login")
             }
         })
         .catch(err=> {

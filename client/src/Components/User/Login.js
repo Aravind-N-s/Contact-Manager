@@ -53,7 +53,7 @@ class Login extends React.Component{
                 <label>                               
                     <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
                 </label><br />
-                <input type="submit" /><Redirect to='/login'  /><br />
+                <input type="submit" /><Redirect to='/'/><br />
             </form>
         )
     }
