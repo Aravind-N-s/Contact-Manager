@@ -1,5 +1,5 @@
-const Contact = require('../Model/Contact')
-const Classification = require('../Model/Classification')
+const Contact = require('../Models/Contact')
+const Classification = require('../Models/Classification')
 
 module.exports.list = (req,res) =>{
     const {user} = req
