@@ -20,83 +20,64 @@ import ClassificationNew from './Components/Classification/New'
 class App extends React.Component {
     constructor(props){
         super(props)
-        this.handleAuth=this.handleAuth.bind(this)
+        this.handleShow = this.handleShow.bind(this)
     }
-
-    handleAuth = (props) =>{
+    handleShow(){
         return(
-            <div>
-                {_.isEmpty(this.props.user) ? (
-                    <>
-                        <Popup trigger={<Link to="/users/login"><Button style={{width:75}} variant="success">Login</Button></Link>} position="left top"on="click">
-                            <Login />
-                        </Popup><br />
-                        <Popup trigger={<Link  to="/users/register"><Button style={{marginTop:10,width:75}} variant="success">Register</Button></Link>} position="left top"on="click">
-                            <Register />
-                        </Popup>
-                    </>
-                ) : (
-                    <>
-                        <Popup trigger={<Link style={{position: "absolute", top: "25%", right: 10}} className="btn btn-danger" to="/users/account">Account</Link>}position="top right"on="click">
-                           <Account />                          
-                        </Popup>
-                    </>
-                ) }
-            </div>
+            <Container>
+                <Row style={{marginTop:"10px"}}>
+                    <Col><ClassificationList/></Col> 
+                    <Col><ContactList/></Col>
+                </Row>
+            </Container>
         )
     }
-
-    render() {
-        const Card = () =>{
-            return(
-                <div style={{width:"200px"}}className="card">
-                    <h3 className="list-group-item">Login</h3>
-                    <h5 className="list-group-item">email: user1@contact.com password:contactuser1</h5>
-                    <h5 className="list-group-item">email: user2@contact.com password:contactuser2</h5>
-                </div>
-            )
-        }
+    render(){
         return (
             <BrowserRouter>
                 {!_.isEmpty(this.props.user)?(
                     <Navbar className="font-italic font-weight-bold shadow-lg rounded bg-dark" fixed="bottom">
                         <Navbar.Brand><Link to="/" >
                             <h1 className="text-danger">{this.props.user.username+"'s"} Contacts</h1>
-                            </Link>{this.handleAuth()}
+                            </Link>
+                            <Popup trigger={<Link style={{position: "absolute", top: "25%", right: 10}} className="btn btn-danger" to="/users/account">Account</Link>}position="top right"on="click">
+                                <Account />                          
+                            </Popup>
                         </Navbar.Brand>
                     </Navbar>
                 ):(
                     <>
-                        <div className="navbar font-italic font-weight-bold shadow-lg p-3 mb-5 rounded bg-danger"><h1>Contact Manager</h1> {this.handleAuth()} </div>
+                        <div className="navbar font-italic font-weight-bold shadow-lg p-3 mb-5 rounded bg-danger">
+                            <h1>Contact Manager</h1>
+                            <Link style={{position: "absolute", top: "2%", right: 10}} className="btn btn-success" to="/users/login">Login</Link>
+                            <Link style={{position: "absolute", top: "50%", right: 10}} className="btn btn-success" to="/users/register">Register</Link>
+                        </div>
                     </>
                 )}                        
                 
                 <>
                     {_.isEmpty(this.props.user) ? (
                             <Switch>
-                                <>
-                                    <Route exact strict path="users/login"/> 
-                                    <Route exact strict path="users/register" render={() => (<Redirect to="/"/>)}/>        
+                                <>  
+                                    <Route exact strict path="/users/login" component={Login}/>
+                                    <Route exact strict path="/users/register" component={Register}/>       
                                     <img style={{marginLeft: "35%"}} src="/images/2.jpg"/>
                                     <audio src="/images/2.mp3" autoPlay/>
                                     <Popup trigger={<button style={{marginLeft:"45%"}} className=" bg-info rounded h1"> Info </button>} position = "top right" on='click'>
-                                    <div>
-                                        <Card/>                       
-                                    </div>
-                                </Popup>
+                                        <div style={{width:"500px"}}className="card">
+                                            <h3 className="list-group-item">Login</h3>
+                                            <h5 className="list-group-item">email: user1@contact.com password:contactuser1</h5>
+                                            <h5 className="list-group-item">email: user2@contact.com password:contactuser2</h5>
+                                        </div>                      
+                                    </Popup>
                                 </>   
                             </Switch>
                     ) : (      
-                        <div> 
-                            <Container>
-                                <Row style={{marginTop:"10px"}}>
-                                    <Col><ClassificationList/></Col> 
-                                    <Col><ContactList/></Col>
-                                </Row>
-                            </Container>    
+                        <div>     
                             <Switch>
                             <>
-                                <Route exact strict path="/users/account"/>                     
+                                <Route exact strict path="/info" component={this.handleShow}/>                     
+                                <Route exact strict path="/users/account" render = {() => (<Redirect to="/info" />)}/>                     
                                 <Route exact strict path="/users/logout" component={Logout}/>   
                                 <Route exact strict path="/new/:id" component={ContactNew}/>   
                                 <Route exact strict path="/show/:id" component={ContactShow}/>   
@@ -116,6 +97,7 @@ const mapStateToProps = (state) => {
       contact : state.contact,
       classification: state.classification
     }
-  }
+}
+
 export default connect(mapStateToProps)(App)
 

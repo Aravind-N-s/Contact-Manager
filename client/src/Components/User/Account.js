@@ -23,7 +23,6 @@ class Account extends React.Component{
     }
 
     render(){
-        console.log(this.props.contact,'contact')
         return(
             <div>
                 <h3>User Account</h3>

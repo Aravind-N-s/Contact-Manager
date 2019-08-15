@@ -1,13 +1,20 @@
 import React from 'react'
 import axios from '../../Config/axios'
 import {Form} from 'react-bootstrap'
+import {Redirect} from 'react-router-dom'
+
+const Way = () =>{
+    return(
+        <Redirect to="/" />
+    )
+}
 
 class Login extends React.Component{
     constructor(props){
         super(props)
         this.state={
             email:'',
-            password:''
+            password:'',
         }
         this.handleChange=this.handleChange.bind(this)
         this.handleSubmit=this.handleSubmit.bind(this)
@@ -24,15 +31,16 @@ class Login extends React.Component{
             email:this.state.email,
             password:this.state.password
         }
-        console.log(formData)
         axios.post(`/users/login`,formData)
-        .then(response=>{
+        .then((response)=>{
             if(response.data.errors){
                 alert(response.data.errors)
             }else{
                 const token=response.data.token
                 if(token){
                     localStorage.setItem('userAuthToken',token)
+                    alert("Welcome to the App")
+                    this.props.history.push("/info")
                 }
             }
         })
@@ -41,7 +49,7 @@ class Login extends React.Component{
         })
 
     }
-    render(){
+    render(props){
         return(
             <Form className="container" onSubmit={this.handleSubmit}>
                 <Form.Group>
@@ -54,5 +62,4 @@ class Login extends React.Component{
         )
     }
 }
-
 export default Login

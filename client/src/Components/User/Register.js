@@ -32,7 +32,7 @@ class Register extends React.Component{
             if(response.data.errors){
                 alert(response.data.message)
             }else {
-                alert("Please Go To Login")
+                this.props.history.push("/users/login")
             }
         })
         .catch(err=> {
