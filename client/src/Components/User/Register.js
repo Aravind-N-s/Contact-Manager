@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from '../../Config/axios'
+import {Form} from 'react-bootstrap' 
 
 class Register extends React.Component{
         constructor(){
@@ -27,9 +28,9 @@ class Register extends React.Component{
         }
         axios.post(`/users/register`,formData)
         .then(response=>{
+            console.log(response.data)
             if(response.data.errors){
                 alert(response.data.message)
-                // this.props.history.push('/users/login')
             }else {
                 alert("Please Go To Login")
             }
@@ -41,21 +42,15 @@ class Register extends React.Component{
 
     render(){
         return(         
-            <form onSubmit={this.handleSubmit}>
-                <fieldset>  
-                    <h2 >REGISTER</h2>
-                    <label>
-                        <input  type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Username"/>
-                    </label><br/>
-                    <label>
-                        <input type="text" name="email" value={this.state.email}  onChange={this.handleChange} placeholder="Email"/>
-                    </label><br/>                       
-                    <label>                                
-                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
-                    </label><br/>
-                    <input type="submit" value="Submit"/>
-                </fieldset>
-            </form>
+            <Form className="container" onSubmit={this.handleSubmit}>
+                <Form.Group>  
+                    <Form.Label className="text-dark">REGISTER</Form.Label>
+                    <Form.Control type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Username"/>
+                    <Form.Control type="text" name="email" value={this.state.email}  onChange={this.handleChange} placeholder="Email"/>                     
+                    <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password"/>   
+                    <input style={{marginLeft: "25%", marginTop:"5%"}} className="btn btn-success" type="submit" value="Submit"/>
+                </Form.Group>
+            </Form>
         )
     }
 }

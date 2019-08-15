@@ -12,7 +12,8 @@ class ClassificationNew extends React.Component{
         }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
-    handleSubmit(formData){
+    handleSubmit(formData,e){
+        e.preventDefault()
         axios.post('/classification',formData, { 
             headers: {
                 'x-auth': localStorage.getItem('userAuthToken')
@@ -20,10 +21,10 @@ class ClassificationNew extends React.Component{
         })
         .then(response => {
             if(response.data.hasOwnProperty('errors')){
-                console.log(response.data.errors)
+                alert(response.data.errors)
             }
             else {
-                // this.props.history.push(`/`)
+                this.props.history.push(`/`)
                 const newClassification = response.data
                 this.props.dispatch(addClassification(newClassification))
             }

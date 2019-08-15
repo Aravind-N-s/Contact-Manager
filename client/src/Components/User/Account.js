@@ -26,13 +26,11 @@ class Account extends React.Component{
         console.log(this.props.contact,'contact')
         return(
             <div>
-                <h6>User Account</h6>
-                    <h4>{this.props.user.username}
-                    </h4>
-                    {this.props.contact.map((contacts) => {
-                        return <div key={contacts._id}>{contacts.name}</div>
-                    })}
-               <Link to="/users/logout">Logout</Link> 
+                <h3>User Account</h3>
+                <h4>{this.props.user.username}</h4>   
+                <p>Contact - {this.props.contact.length}</p>
+                <p>Classification - {this.props.classification.length}</p>
+               <Link className="btn btn-dark" to="/users/logout">Logout</Link> 
             </div>
         )
     }
@@ -41,7 +39,8 @@ class Account extends React.Component{
 const mapStateToProps = (state) => {
     return {
         user : state.user,
-        contact: state.contact
+        contact: state.contact,
+        classification: state.classification
     }
 }
 

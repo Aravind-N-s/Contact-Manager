@@ -22,6 +22,11 @@ const contactSchema = new Schema({
         ref:'Classification',
         required: true
     },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdAt:{
         type: Date,
         default: Number(Date.now())

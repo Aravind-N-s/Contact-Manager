@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import {connect} from 'react-redux'
-import {Navbar, Container} from 'react-bootstrap' 
+import {Navbar, Container, Button, Row, Col } from 'react-bootstrap' 
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom'
 
 import Login from './Components/User/Login'
@@ -11,8 +11,10 @@ import Account from './Components/User/Account'
 import Register from './Components/User/Register'
 
 import ContactList from "./Components/Contact/List"
+import ContactShow from "./Components/Contact/Show"
 
 import ClassificationList from './Components/Classification/List'
+import ClassificationNew from './Components/Classification/New'
 
 class App extends React.Component {
     constructor(props){
@@ -25,10 +27,10 @@ class App extends React.Component {
             <div>
                 {_.isEmpty(this.props.user) ? (
                     <>
-                        <Popup trigger={<Link className="btn btn-success" to="/users/login">Login</Link>} position="left top"on="click">
+                        <Popup trigger={<Link to="/users/login"><Button style={{width:75}} variant="success">Login</Button></Link>} position="left top"on="click">
                             <Login />
                         </Popup><br />
-                        <Popup trigger={<Link style={{marginTop:5}} className="btn btn-success" to="/users/register">Register</Link>} position="left top"on="click">
+                        <Popup trigger={<Link  to="/users/register"><Button style={{marginTop:10,width:75}} variant="success">Register</Button></Link>} position="left top"on="click">
                             <Register />
                         </Popup>
                     </>
@@ -49,7 +51,7 @@ class App extends React.Component {
                 {!_.isEmpty(this.props.user)?(
                     <Navbar className="font-italic font-weight-bold shadow-lg rounded bg-dark" fixed="bottom">
                         <Navbar.Brand><Link to="/" >
-                            <h1>{this.props.user.username+"'s"} Contacts</h1>
+                            <h1 className="text-danger">{this.props.user.username+"'s"} Contacts</h1>
                             </Link>{this.handleAuth()}
                         </Navbar.Brand>
                     </Navbar>
@@ -63,25 +65,26 @@ class App extends React.Component {
                     {_.isEmpty(this.props.user) ? (
                             <Switch>
                                 <>
-                                    <Route exact strict path="users/register"/>        
                                     <Route exact strict path="users/login"/> 
-                                    <img style={{marginLeft: "35%"}}src="/images/2.jpg"/>
+                                    <Route exact strict path="users/register" render={() => (<Redirect to="/"/>)}/>        
+                                    <img style={{marginLeft: "35%"}} src="/images/2.jpg"/>
                                 </>   
                             </Switch>
                     ) : (      
                         <> 
-                            {/* <Container>
-                                <div className="row border">
-                                    <ClassificationList/>
-                                    <ContactList/>
-                                </div>
-                            </Container>     */}
+                            <Container>
+                                <Row>
+                                    <Col className="border" xs="6"><ClassificationList/></Col> 
+                                    <Col className="border" xs="6"><ContactList/></Col>
+                                </Row>
+                            </Container>    
                             <Switch>
                             <>
                                 <Route exact strict path="/users/account"/>                     
                                 <Route exact strict path="/users/logout" component={Logout}/>   
-                                <Route path="/contact/new" exact strict />   
-                                <Route path="/contact/info" exact strict/>   
+                                <Route exact strict path="/contact/new" render={() => <Redirect to='/' />}/>   
+                                <Route path="/classification/new" exact strict component={ClassificationNew}/>   
+                                <Route path="/contact/info/:id" exact strict component={ContactShow}/>   
                             </>
                             </Switch>
                         </> )}

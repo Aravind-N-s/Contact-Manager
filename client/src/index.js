@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App'
@@ -28,6 +28,7 @@ if(localStorage.getItem('userAuthToken')){
         }
     })
     .then(response => {
+        console.log(response.data)
         store.dispatch(setContact(response.data.contact))
         store.dispatch(setClassification(response.data.classification))
     })

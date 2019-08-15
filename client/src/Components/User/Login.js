@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from '../../Config/axios'
-import {Redirect} from 'react-router-dom'
+import {Form} from 'react-bootstrap'
 
 class Login extends React.Component{
     constructor(props){
@@ -31,10 +31,8 @@ class Login extends React.Component{
                 alert(response.data.errors)
             }else{
                 const token=response.data.token
-                console.log(response.data)
                 if(token){
                     localStorage.setItem('userAuthToken',token)
-                    // this.props.history.push('/')
                 }
             }
         })
@@ -45,16 +43,14 @@ class Login extends React.Component{
     }
     render(){
         return(
-            <form onSubmit={this.handleSubmit}>
-                <h2>LOGIN</h2>
-                <label>
-                    <input type="text" name="email" value={this.state.email}  onChange={this.handleChange} placeholder="Email"/>
-                </label><br/>               
-                <label>                               
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
-                </label><br />
-                <input type="submit" /><Redirect to='/'/><br />
-            </form>
+            <Form className="container" onSubmit={this.handleSubmit}>
+                <Form.Group>
+                    <Form.Label className="text-dark">LOGIN</Form.Label>
+                    <Form.Control type="text" name="email" value={this.state.email} onChange={this.handleChange} placeholder="Email"/>            
+                    <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
+                    <input style={{marginLeft: "25%", marginTop:"5%"}} className="btn btn-success" type="submit" value="Submit"/>
+                </Form.Group>
+            </Form>
         )
     }
 }

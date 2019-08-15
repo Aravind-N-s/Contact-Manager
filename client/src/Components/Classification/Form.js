@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 class CategoryForm extends React.Component{
     constructor(props){
@@ -30,11 +31,16 @@ class CategoryForm extends React.Component{
                         <span>Classification Name</span>
                         <input type="text" name='name' onChange={this.handleChange}/>
                     </label><br />
-                    <input className ="btn btn-dark"  type = "submit" />
+                    <input className ="btn btn-dark" type = "submit" />
                 </form>
             </div>
         )
     }
 }
 
-export default CategoryForm
+const mapStateToProps = (state) =>{
+    return {
+        user:state.user
+    }
+}
+export default connect(mapStateToProps)(CategoryForm)

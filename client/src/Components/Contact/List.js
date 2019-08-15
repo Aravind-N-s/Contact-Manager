@@ -12,8 +12,8 @@ const ContactList = (props) =>{
                 props.contact.map((contacts => {
                     return (
                         <div key ={contacts._id}>
-                            <Popup  trigger={<Link to='/contact/info'>{contacts.name}<br/></Link>} position = "right bottom" on="hover"> 
-                                <ContactDisplay id={contacts._id}/>
+                            <Popup  trigger={<Link to={`/contact/info/${contacts._id}`}>{contacts.name}<br/></Link>} position = "right bottom" on="hover"> 
+                                <ContactDisplay/>
                             </Popup>
                         </div>
                     )

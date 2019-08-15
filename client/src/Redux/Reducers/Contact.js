@@ -4,6 +4,9 @@ const contactReducer = (state = contactInitialState, action ) => {
         case 'SET_CONTACT' :{
             return[...action.payload]
         }
+        case 'ADD_CONTACT' :{
+            return[...state, action.payload]
+        }
             
         default:
             return[...state]

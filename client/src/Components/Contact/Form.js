@@ -1,9 +1,18 @@
 import React from 'react'
-import axios from '../../Config/axios'
+import {connect} from 'react-redux'
+import {Form, FormGroup} from 'react-bootstrap'
+import {startAddContact} from '../../Redux/Actions/Contact'
+
 
 class ContactForm extends React.Component{
     constructor(props){
         super(props)
+        this.state ={
+            name:'',
+            number:'',
+            email:'',
+            classification:''
+        }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -19,48 +28,49 @@ class ContactForm extends React.Component{
         e.preventDefault()
         const formData = {
             name: this.state.name,
-            phoneNo: this.state.phoneNo,
+            number: this.state.number,
             email: this.state.email,
-            category: this.state.category
+            classification: this.state.classification
         }
-        this.props.handleSubmit(formData)
+        console.log(formData, "data")
+        this.props.dispatch(startAddContact(formData))
     }
 
     componentWillReceiveProps(nextProps){
         this.setState(() => ({
-            name: this.state.name,
-            phoneNo: this.state.phoneNo,
-            email: this.state.email,
-            category: this.state.category
+            name:this.state.name,
+            phoneNo:this.state.phoneNo,
+            email:this.state.email,
+            classification:this.state.classification
         }))
     }
     
     render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        <select value={this.state.category} name="category" onChange={this.handleChange}>
-                            <option value="">Categories</option>
-                            {this.state.categories.map((category) => {
-                                return <option key={category._id}value={category._id} >{category.name}</option>
-                            })}
-                        </select>                    
-                    </label><br/>
-                    <label >
-                        <input type="text" placeholder = "Title" value={this.state.title} onChange={this.handleChange} name="title" />
-                    </label><br/>
-                    <label >
-                        <input type="Number" placeholder = "Phone.NO" value={this.state.phoneNo} onChange={this.handleChange} name="phoneNo" />
-                    </label><br/>
-                    <label >
-                        <input type="email" placeholder = "Email" value={this.state.email} onChange={this.handleChange} name="email" />
-                    </label><br/>
-                    <center><input type='submit' /></center>
-                </form>
-            </div>
+        return (            
+            <form className="container border" onSubmit={this.handleSubmit}>
+                <FormGroup>
+                    <Form.Label>New Note</Form.Label>
+                    <FormGroup>
+                    <select className="form-control" value={this.state.classification} name="classification" onChange={this.handleChange}>
+                        <option value="">select</option>
+                        {this.props.classification.map((classifications)=>{
+                            return <option key={classifications._id} value={classifications._id}>{classifications.name}</option>
+                        })}
+                    </select>                   
+                    </FormGroup>
+                    <Form.Control type="text" placeholder="name" value={this.state.name} onChange={this.handleChange} name="name" />
+                    <Form.Control type="Number" placeholder="Phone Number" value={this.state.number} onChange={this.handleChange} name="number" maxLength='10'/>
+                    <Form.Control type="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} name="email" />
+                    <input type='submit'/>
+                </FormGroup>
+            </form>
         )
     }
 }
 
-export default ContactForm
+const mapStateToProps = (state) =>{
+    return {
+        classification: state.classification,
+    }
+}
+export default connect(mapStateToProps)(ContactForm)
