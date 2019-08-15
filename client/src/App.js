@@ -49,7 +49,7 @@ class App extends React.Component {
     render() {
         const Card = () =>{
             return(
-                <div style={{width:"500px"}} className="card bg-info">
+                <div className="card bg-info">
                     <h3 className="list-group-item">Login</h3>
                     <h5 className="list-group-item">email: user1@contact.com password:contactuser1 and email: user2@contact.com password:contactuser2</h5>
                 </div>
