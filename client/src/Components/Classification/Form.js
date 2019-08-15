@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Form, FormGroup} from 'react-bootstrap'
 
 class CategoryForm extends React.Component{
     constructor(props){
@@ -25,15 +26,13 @@ class CategoryForm extends React.Component{
     }
     render(){
         return(
-            <div>
-                <form onSubmit = {this.handleSubmit}>
-                    <label>
-                        <span>Classification Name</span>
-                        <input type="text" name='name' onChange={this.handleChange}/>
-                    </label><br />
+            <Form className="border col-sm-6" onSubmit = {this.handleSubmit}>
+                <FormGroup >
+                    <Form.Label className="h2">Add Classification</Form.Label>
+                    <Form.Control type="text" placeholder="Name" name='name' onChange={this.handleChange}/>
                     <input className ="btn btn-dark" type = "submit" />
-                </form>
-            </div>
+                </FormGroup>
+            </Form>
         )
     }
 }

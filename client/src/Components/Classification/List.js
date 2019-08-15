@@ -1,27 +1,29 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Popup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-
-import ContactForm from '../Contact/Form'
+import { Card,CardTitle,CardBody,Button } from 'reactstrap'
 
 const ClassificationList = (props) => {
     return (
-        <div>
-            <h3>Classification List</h3> 
-            {props.classification && (
-                <ol>
-                    {props.classification.map((classifications => {
-                        return <li key={classifications._id}>
-                                <Popup trigger={<Link to='contact/new'>{classifications.name}</Link>} position="left top"on="hover">
-                                    <ContactForm />
-                                </Popup>
-                            </li> 
-                    }))}
-                </ol>
-            )}
-            <Link style={{marginLeft:10}} className = "btn btn-secondary" to='/classification/new'>New Classification</Link>
-        </div>
+        <Card>
+            <CardBody>
+                <CardTitle className="h3">Add Contact</CardTitle> 
+                <CardTitle className="h4 text-muted">Classification List</CardTitle> 
+                {props.classification && (
+                    <ol className="card-text">
+                        {props.classification.map((classifications => {
+                            return <li key={classifications._id}>
+                                    <Link style={{height:"20%", width:"20%", marginTop:"2%"}}
+                                        className ="btn btn-dark" to={`/new/${classifications._id}`}>
+                                        {classifications.name}
+                                    </Link>
+                                </li> 
+                        }))}
+                    </ol>
+                )}
+                <Link style={{marginLeft:10}} className = "btn btn-secondary" to='/classification/new'>New Classification</Link>
+            </CardBody>
+        </Card>
     )
 }
 

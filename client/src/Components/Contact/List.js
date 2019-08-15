@@ -1,25 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Popup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-import ContactDisplay from './Show'
+import { ListGroup, ListGroupItem } from 'reactstrap'
 
 const ContactList = (props) =>{
     return (
-        <div>
-            <h3>Contacts List</h3>
+        <ListGroup >
+            <ListGroupItem className="h3">-Contacts-</ListGroupItem> 
             {props.contact && (
                 props.contact.map((contacts => {
                     return (
-                        <div key ={contacts._id}>
-                            <Popup  trigger={<Link to={`/contact/info/${contacts._id}`}>{contacts.name}<br/></Link>} position = "right bottom" on="hover"> 
-                                <ContactDisplay/>
-                            </Popup>
-                        </div>
+                        <ListGroupItem key={contacts._id}>
+                            <Link style={{textTransform:"capitalize"}} className="h4 text-bold text-dark"
+                                to={`/show/${contacts._id}`}>{contacts.name}<br/>
+                            </Link>
+                        </ListGroupItem>
                     )
                 }))
             )}
-        </div>
+        </ListGroup>
     )
 }
 

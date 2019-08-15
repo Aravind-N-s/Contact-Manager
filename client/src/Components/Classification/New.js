@@ -12,8 +12,7 @@ class ClassificationNew extends React.Component{
         }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
-    handleSubmit(formData,e){
-        e.preventDefault()
+    handleSubmit(formData){
         axios.post('/classification',formData, { 
             headers: {
                 'x-auth': localStorage.getItem('userAuthToken')
@@ -35,7 +34,7 @@ class ClassificationNew extends React.Component{
     }
     render(){
         return(
-            <div>
+            <div style={{marginTop:"20px"}} className="container">
                 <CategoryForm handleSubmit={this.handleSubmit}/>
             </div>
         )

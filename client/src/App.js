@@ -12,6 +12,7 @@ import Register from './Components/User/Register'
 
 import ContactList from "./Components/Contact/List"
 import ContactShow from "./Components/Contact/Show"
+import ContactNew from "./Components/Contact/New"
 
 import ClassificationList from './Components/Classification/List'
 import ClassificationNew from './Components/Classification/New'
@@ -71,23 +72,23 @@ class App extends React.Component {
                                 </>   
                             </Switch>
                     ) : (      
-                        <> 
+                        <div> 
                             <Container>
-                                <Row>
-                                    <Col className="border" xs="6"><ClassificationList/></Col> 
-                                    <Col className="border" xs="6"><ContactList/></Col>
+                                <Row style={{marginTop:"10px"}}>
+                                    <Col><ClassificationList/></Col> 
+                                    <Col><ContactList/></Col>
                                 </Row>
                             </Container>    
                             <Switch>
                             <>
                                 <Route exact strict path="/users/account"/>                     
                                 <Route exact strict path="/users/logout" component={Logout}/>   
-                                <Route exact strict path="/contact/new" render={() => <Redirect to='/' />}/>   
+                                <Route exact strict path="/new/:id" component={ContactNew}/>   
+                                <Route exact strict path="/show/:id" component={ContactShow}/>   
                                 <Route path="/classification/new" exact strict component={ClassificationNew}/>   
-                                <Route path="/contact/info/:id" exact strict component={ContactShow}/>   
                             </>
                             </Switch>
-                        </> )}
+                        </div> )}
                 </>  
             </BrowserRouter>
         )

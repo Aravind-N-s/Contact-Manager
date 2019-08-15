@@ -1,24 +1,13 @@
 import React from 'react'
 import ContactForm from './Form'
 import {connect} from 'react-redux'
-import {startAddContact} from '../../Redux/Actions/Contact'
 
-class ContactNew extends React.Component{
-    constructor(props){
-        super(props)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    handleSubmit(formData){
-        
-    }
-    render(){
-        return(
-            <div>
-                <ContactForm handleSubmit={this.handleSubmit}/>
-            </div>
-        )
-    }
+const ContactNew = (props) => {
+    return(
+        <div style={{marginRight: "150px"}} className="offset-md-6">
+            <ContactForm id={props.match.params.id}/>
+        </div>
+    )    
 }
 
 export default connect()(ContactNew)
