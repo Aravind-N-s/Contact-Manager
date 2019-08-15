@@ -77,36 +77,8 @@ class App extends React.Component {
                                 <>
                                     <Route exact strict path="users/login"/> 
                                     <Route exact strict path="users/register" render={() => (<Redirect to="/"/>)}/>        
-                                    {/* <img style={{marginLeft: "35%"}} src="/images/2.jpg"/> */}
-                                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                                    <ol className="carousel-indicators">
-                                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                    </ol>
-                                    <div className="carousel-inner">
-                                        <div className="carousel-item active">
-                                            <img src="/images/2.jpg" className="d-block w-100"/>
-                                            <audio src="/images/2.mp3" autoPlay/>
-                                        </div>
-                                        <div className="carousel-item">
-                                            <img src="/images/3.jpg" className="d-block w-100"/>
-                                            <audio src="/images/3.mp3" autoPlay/>
-                                        </div>
-                                        <div className="carousel-item">
-                                            <img src="/images/4.jpg" className="d-block w-100"/>
-                                            <audio src="/images/4.mp3" autoPlay/>
-                                        </div>
-                                    </div>
-                                    <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span className="sr-only">Previous</span>
-                                    </a>
-                                    <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span className="sr-only">Next</span>
-                                    </a>
-                                    </div>
+                                    <img style={{marginLeft: "35%"}} src="/images/2.jpg"/>
+                                    <audio src="/images/2.mp3" autoPlay/>
                                     <Popup trigger={<button style={{marginLeft:"45%"}} className=" bg-info rounded h1"> Info </button>} position = "top right" on='click'>
                                     <div>
                                         <Card/>                       
