@@ -18,24 +18,17 @@ import ClassificationList from './Components/Classification/List'
 import ClassificationNew from './Components/Classification/New'
 
 class App extends React.Component {
-    constructor(props){
-        super(props)
-        this.handleShow = this.handleShow.bind(this)
-    }
-    handleShow(){
-        return(
-            <Container>
-                <Row style={{marginTop:"10px"}}>
-                    <Col><ClassificationList/></Col> 
-                    <Col><ContactList/></Col>
-                </Row>
-            </Container>
-        )
-    }
     render(){
         return (
             <BrowserRouter>
                 {!_.isEmpty(this.props.user)?(
+                    <>
+                    <Container>
+                        <Row style={{marginTop:"10px"}}>
+                            <Col><ClassificationList/></Col> 
+                            <Col><ContactList/></Col>
+                        </Row>
+                    </Container>
                     <Navbar className="font-italic font-weight-bold shadow-lg rounded bg-dark" fixed="bottom">
                         <Navbar.Brand><Link to="/" >
                             <h1 className="text-danger">{this.props.user.username+"'s"} Contacts</h1>
@@ -44,7 +37,7 @@ class App extends React.Component {
                                 <Account />                          
                             </Popup>
                         </Navbar.Brand>
-                    </Navbar>
+                    </Navbar></>
                 ):(
                     <>
                         <div className="navbar font-italic font-weight-bold shadow-lg p-3 mb-5 rounded bg-danger">
@@ -76,7 +69,6 @@ class App extends React.Component {
                         <div>     
                             <Switch>
                             <>
-                                <Route exact strict path="/info" component={this.handleShow}/>                     
                                 <Route exact strict path="/users/account" render = {() => (<Redirect to="/info" />)}/>                     
                                 <Route exact strict path="/users/logout" component={Logout}/>   
                                 <Route exact strict path="/new/:id" component={ContactNew}/>   
