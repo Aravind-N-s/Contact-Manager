@@ -50,7 +50,7 @@ class ContactForm extends React.Component{
         return (            
             <form className="container border" onSubmit={this.handleSubmit}>
                 <FormGroup>
-                    <Label>New Note</Label>
+                    <Label>New Contact</Label>
                     <FormGroup>
                         {this.state.edit == true ? (
                             <>
