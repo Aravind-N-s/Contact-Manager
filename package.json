@@ -23,7 +23,7 @@
     "nodemon": "^2.0.15",
     "react-redux": "^7.2.6",
     "reactjs-popup": "^1.5.0",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "engines": {
     "node": "10.3.0",
